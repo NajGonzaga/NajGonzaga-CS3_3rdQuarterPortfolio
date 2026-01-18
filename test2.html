@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Club/Organization Application Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      padding: 20px;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    fieldset {
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    legend {
+      font-weight: bold;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #4a90e2;
+      background: #eaf4ff;
+      outline: none;
+    }
+    .error {
+      border: 2px solid red;
+      background: #ffe6e6;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button[type="submit"] {
+      background: #4CAF50;
+      color: white;
+    }
+    button[type="reset"] {
+      background: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<form method="post" action="submit"
+      onsubmit="return confirm('Are you sure you want to submit this application?');"
+      onreset="return confirm('Do you really want to reset the form?');">
+
+  <!-- Fieldset 1: Student Info -->
+  <fieldset>
+    <legend>Student Information</legend>
+    <label>Student ID:
+      <input type="number" name="studentID" required onblur="checkEmpty(this)">
+    </label>
+    <label>Full Name:
+      <input type="text" name="fullName" required onblur="checkEmpty(this)">
+    </label>
+    <label>Birthday:
+      <input type="date" name="birthday" required onblur="checkEmpty(this)">
+    </label>
+    <label>Email Address:
+      <input type="email" name="email" required onblur="checkEmpty(this)">
+    </label>
+  </fieldset>
+
+  <!-- Fieldset 2: Contact & Academic Info -->
+  <fieldset>
+    <legend>Contact & Academic Information</legend>
+    <label>Mobile Phone:
+      <input type="text" name="mobile" required onblur="checkEmpty(this)">
+    </label>
+    <label>Grade Level:
+      <select name="gradeLevel" required>
+        <option value="">--Select Grade Level--</option>
+        <option value="G7">Grade 7</option>
+        <option value="G8">Grade 8</option>
+        <option value="G9">Grade 9</option>
+        <option value="G10">Grade 10</option>
+        <option value="G11">Grade 11</option>
+        <option value="G12">Grade 12</option>
+      </select>
+    </label>
+    <label>Intern / Extern:
+      <input type="radio" name="status" value="INT" required> Intern
+      <input type="radio" name="status" value="EXT" required> Extern
+    </label>
+    <label>Preferred Organization / Club:
+      <select name="club" required>
+        <option value="">--Select Club--</option>
+        <option value="SCI">Science Club</option>
+        <option value="ART">Art Society</option>
+        <option value="MUS">Music Ensemble</option>
+        <option value="SPO">Sports Committee</option>
+        <option value="LIT">Literary Guild</option>
+      </select>
+    </label>
+  </fieldset>
+
+  <!-- Fieldset 3: Motivation -->
+  <fieldset>
+    <legend>Motivation</legend>
+    <label>Why do you want to join?
+      <textarea name="reason" rows="4" required onblur="checkEmpty(this)"></textarea>
+    </label>
+  </fieldset>
+
+  <!-- Buttons -->
+  <button type="submit">Submit</button>
+  <button type="reset">Reset</button>
+</form>
+
+<script>
+  function checkEmpty(element) {
+    if (!element.value.trim()) {
+      element.classList.add("error");
+    } else {
+      element.classList.remove("error");
+    }
+  }
+</script>
+
+</body>
+</html>
