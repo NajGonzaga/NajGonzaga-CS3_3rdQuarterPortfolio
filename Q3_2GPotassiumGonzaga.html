@@ -137,9 +137,15 @@
             reason: form.reason.value
       };
 
-      /* Save to localStorage */
-      
+        /* Save to localStorage */
+        let signups = JSON.parse(localStorage.getItem("clubSignups")) || [];
+        signups.push(signup); // Add new signup
+        localStorage.setItem("clubSignups", JSON.stringify(signups)); // Save to localStorage
 
+        alert("Sign-up saved successfully!");
+        form.reset(); // Clear form
+        return false;
+        }
     </script>
     </head>
     <body>
@@ -202,6 +208,9 @@
             <div class="button-group">
                 <input type="submit" value="Submit">
                 <input type="reset" value="Reset">
+                <a href="viewSignUps.html"><button type="button">View Signups</button></a>
+            </div>
+
             </div>
         </form>
     </body>
