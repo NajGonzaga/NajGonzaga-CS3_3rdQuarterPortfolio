@@ -4,7 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>View Signups</title>
-    
+
+      <style>
+    body {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background: linear-gradient(110deg, #ffb1e0df, #b2ff94);
+      animation: gradient-bg 10s ease infinite;
+      background-size: 100% 100%;
+      font-size: 15px;
+      margin: 0;
+      padding: 20px;
+    }
+    @keyframes gradient-bg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto;
+      background: #d3ffc2;
+      padding: 20px;
+      border-radius: 8px;
+      border: 6px solid #ffb1e0df;
+    }
+    h1 {
+      text-align: center;
+      font-size: 25px;
+      margin-bottom: 20px;
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    select {
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #ffeec8;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #ffeec8;
+    }
+    .message {
+      font-style: italic;
+      color: red;
+      margin-top: 10px;
+      text-align: center;
+    }
+    a {
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+    }
+    a:hover {
+      color: #ff4081;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -19,5 +89,93 @@
     </label>
     <div>Total Signup: <span id="totalCount">0</span></div>
   </div>
+
+  <div id="message" class="message"></div>
+  <table id="signupTable">
+    <thead>
+      <tr>
+        <th>Club</th>
+        <th>ID</th>
+        <th>Fullname</th>
+        <th>Grade</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Intern</th>
+        <th>Extern</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    let allSignups = [];
+
+    function loadSignups() {
+      const data = localStorage.getItem("clubSignups");
+      if (!data) {
+        document.getElementById("message").textContent = "No sign-ups found in localStorage.";
+        document.getElementById("signupTable").style.display = "none";
+        return;
+    }
+    allSignups = JSON.parse(data);
+      populateDropdown();
+      displaySignups(allSignups);
+
+    }
+
+    
+    function populateDropdown() {
+      const clubs = [...new Set(allSignups.map(s => s.clubpreference))];
+      const dropdown = document.getElementById("clubFilter");
+      clubs.forEach(club => {
+        const option = document.createElement("option");
+        option.value = club;
+        option.textContent = club;
+        dropdown.appendChild(option);
+      });
+    }
+
+    function displaySignups(signups) {
+      const tbody = document.querySelector("#signupTable tbody");
+      tbody.innerHTML = "";
+
+      if (signups.length === 0) {
+        document.getElementById("message").textContent = "No Sign Ups for the club.";
+        document.getElementById("totalCount").textContent = "0";
+        return;
+      }
+
+      document.getElementById("message").textContent = "";
+      signups.forEach(s => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${s.clubpreference}</td>
+          <td>${s.studentid}</td>
+          <td>${s.fullname}</td>
+          <td>${s.gradelevel}</td>
+          <td>${s.emailaddress}</td>
+          <td>${s.mobile}</td>
+          <td>${s.residence === "Intern" ? "✔" : ""}</td>
+          <td>${s.residence === "Extern" ? "✔" : ""}</td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      document.getElementById("totalCount").textContent = signups.length;
+    }
+
+    function filterSignups() {
+      const selectedClub = document.getElementById("clubFilter").value;
+      if (selectedClub === "ALL") {
+        displaySignups(allSignups);
+      } else {
+        const filtered = allSignups.filter(s => s.clubpreference === selectedClub);
+        displaySignups(filtered);
+      }
+    }
+
+    window.onload = loadSignups;
+
+  </script>
 
 </body>
