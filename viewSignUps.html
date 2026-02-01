@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>View Signups</title>
-
-      <style>
+  <meta charset="UTF-8">
+  <title>Club Signups</title>
+  <style>
     body {
       font-family: Georgia, 'Times New Roman', Times, serif;
       background: linear-gradient(110deg, #ffb1e0df, #b2ff94);
@@ -74,38 +72,38 @@
       color: #ff4081;
     }
   </style>
-
 </head>
-
 <body>
-    <h1>Club Signups</h1>
+  <div class="container">
+    <h1>Show List of Students Who Signed-Up</h1>
     <div class="controls">
-    <a href="Q3_2GPotassiumGonzaga.html">← Back to Signup</a>
-    <label>
-      Select Your Club:
-      <select id="clubFilter" onchange="filterSignups()">
-        <option value="ALL">-- Select an option --</option>
-      </select>
-    </label>
-    <div>Total Signup: <span id="totalCount">0</span></div>
-  </div>
+      <a href="index.html">← Back to Signup</a>
+      <label>
+        Select Club:
+        <select id="clubFilter" onchange="filterSignups()">
+          <option value="ALL">-- Select an option --</option>
+        </select>
+      </label>
+      <div>Total Signup: <span id="totalCount">0</span></div>
+    </div>
 
-  <div id="message" class="message"></div>
-  <table id="signupTable">
-    <thead>
-      <tr>
-        <th>Club</th>
-        <th>ID</th>
-        <th>Fullname</th>
-        <th>Grade</th>
-        <th>Email</th>
-        <th>Mobile</th>
-        <th>Intern</th>
-        <th>Extern</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <div id="message" class="message"></div>
+    <table id="signupTable">
+      <thead>
+        <tr>
+          <th>Club</th>
+          <th>ID</th>
+          <th>Fullname</th>
+          <th>Grade</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Intern</th>
+          <th>Extern</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
   <script>
     let allSignups = [];
@@ -116,14 +114,13 @@
         document.getElementById("message").textContent = "No sign-ups found in localStorage.";
         document.getElementById("signupTable").style.display = "none";
         return;
-    }
-    allSignups = JSON.parse(data);
+      }
+
+      allSignups = JSON.parse(data);
       populateDropdown();
       displaySignups(allSignups);
-
     }
 
-    
     function populateDropdown() {
       const clubs = [...new Set(allSignups.map(s => s.clubpreference))];
       const dropdown = document.getElementById("clubFilter");
@@ -175,7 +172,6 @@
     }
 
     window.onload = loadSignups;
-
   </script>
-
 </body>
+</html>
